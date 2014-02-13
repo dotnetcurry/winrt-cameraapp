@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Store_JS_Camera</title>
+
+    <!-- WinJS references -->
+    <link href="//Microsoft.WinJS.1.0/css/ui-dark.css" rel="stylesheet" />
+    <script src="//Microsoft.WinJS.1.0/js/base.js"></script>
+    <script src="//Microsoft.WinJS.1.0/js/ui.js"></script>
+
+    <!-- Store_JS_Camera references -->
+    <link href="/css/default.css" rel="stylesheet" />
+    <script src="/js/default.js"></script>
+    <script type="text/javascript">
+        function captureImage()
+        {
+            //S1: Create a new Camera Capture UI Object
+            var cam = Windows.Media.Capture.CameraCaptureUI();
+            //S2: Perform an Async operation where the Capture Image will be stored as file 
+            cam.captureFileAsync(Windows.Media.Capture.CameraCaptureUIMode.photo)
+                .done(function (data) {
+                    if (data)
+                    {
+                        //S3: Create a URL for the capture image and assign it to the <Img>
+                        document.getElementById('imgCapture').src = window.URL.createObjectURL(data);
+                    }
+                }
+                , error);
+            document.getElementById('txterror').value = "Done";
+        }
+        function error()
+        {
+            document.getElementById('txterror').value = "Error";
+        }
+    </script>
+</head>
+<body>
+    <p>Content goes here</p>
+    <input type="button" id="btnCapture" value="Capture"  onclick="captureImage()"/>
+    <img id="imgCapture" src=""  width="100px" height="100px"/>
+    <input type="text" id="txterror" />
+</body>
+</html>
